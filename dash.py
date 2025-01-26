@@ -48,6 +48,12 @@ fig.add_scatter(x=puts['strikePrice'], y=puts['bidPrice'], mode='lines', name='P
 fig.add_scatter(x=puts['strikePrice'], y=puts['askPrice'], mode='lines', name='Put Ask', 
                 line=dict(color='red'))  # Red for ask
 
+# Add a vertical line at the exercisePrice (current price)
+if not filtered.empty:
+    exercise_price = filtered['exercisePrice'].iloc[0]  # Assuming exercisePrice is the same for all rows
+    fig.add_vline(x=exercise_price, line_dash="dot", line_color="blue", annotation_text=f"Current: {int(exercise_price)}", 
+                  annotation_position="top right")
+
 # Update layout
 fig.update_layout(
     xaxis_title="Strike Price",
