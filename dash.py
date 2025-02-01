@@ -7,19 +7,29 @@ from plotly.subplots import make_subplots
 from datetime import datetime
 from options import fetch_binance_options, fetch_mark_price
 
-asset = 'BTC'
+# Dashboard
 
-st.sidebar.header("Filter by Expiration Date")
+asset = 'BTC'
+options = fetch_binance_options()
+marks = fetch_mark_price()
+
+st.title("Binance Options Dashboard")
+
+st.sidebar.header("Filter")
+
+st.sidebar.subheader("Symbol")
+asset = st.sidebar.selectbox('', sorted(options['asset'].unique()))
+
+st.sidebar.subheader("Expiration")
 days_from_today = st.sidebar.slider(
-    "Days from Today",
+    "days from Today",
     min_value=1,
     max_value=7,
     value=1,
     help="Filter options by expiration date (number of days from today)"
 )
 
-options = fetch_binance_options()
-marks = fetch_mark_price()
+# Data
 
 options = options[options['asset'] == asset]
 data = options.join(marks.set_index('symbol'), on='symbol')
@@ -37,8 +47,7 @@ puts = filtered[filtered['optionType'] == 'P']
 calls = calls.sort_values(by='strikePrice')
 puts = puts.sort_values(by='strikePrice')
 
-st.title("Binance Options Dashboard")
-st.subheader("$BTC")
+# Plots
 
 fig = make_subplots(
     rows=2,
