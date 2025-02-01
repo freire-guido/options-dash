@@ -70,7 +70,7 @@ fig.add_trace(go.Scatter(
         y=calls['markPrice'],
         mode='lines',
         name='Call Mark Price', 
-        line=dict(color='grey')
+        line=dict(dash='dash', color='grey')
     ), row=1, col=1
 )
 
@@ -112,7 +112,12 @@ if not filtered.empty:
 
 # Add histogram for amount
 fig.add_trace(
-    go.Histogram(x=filtered['strikePrice'], y=filtered['amount'], name='Amount'),
+    go.Histogram(
+        x=filtered['strikePrice'],
+        y=filtered['amount'],
+        name='Amount',
+        xbins=dict(size=1)
+    ),
     row=2,
     col=1
 )
