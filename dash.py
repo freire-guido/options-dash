@@ -48,40 +48,56 @@ fig = make_subplots(
     row_heights=[0.7, 0.3]
 )
 
-# Add bid/ask for calls (dashed lines)
+# Add bid/ask/mark for calls (dashed lines)
 fig.add_trace(go.Scatter(
         x=calls['strikePrice'],
         y=calls['bidPrice'],
         mode='lines',
         name='Call Bid',
-        line=dict(dash='dash', color='green')), # Green for bid
-    row=1, col=1
+        line=dict(dash='dash', color='green')
+    ), row=1, col=1
 )
 fig.add_trace(go.Scatter(
         x=calls['strikePrice'],
         y=calls['askPrice'],
         mode='lines',
         name='Call Ask',
-        line=dict(dash='dash', color='red')),   # Red for ask
-    row=1, col=1
+        line=dict(dash='dash', color='red')
+    ), row=1, col=1
+)
+fig.add_trace(go.Scatter(
+        x=calls['strikePrice'],
+        y=calls['markPrice'],
+        mode='lines',
+        name='Call Mark Price', 
+        line=dict(color='grey')
+    ), row=1, col=1
 )
 
-# Add bid/ask for puts (solid lines)
+# Add bid/ask/mark for puts (solid lines)
 fig.add_trace(go.Scatter(
         x=puts['strikePrice'],
         y=puts['bidPrice'],
         mode='lines',
         name='Put Bid',
-        line=dict(color='green')),  # Green for bid
-    row=1, col=1
+        line=dict(color='green')
+    ), row=1, col=1
 )
 fig.add_trace(go.Scatter(
         x=puts['strikePrice'],
         y=puts['askPrice'],
         mode='lines',
         name='Put Ask',
-        line=dict(color='red')),    # Red for ask
-    row=1, col=1
+        line=dict(color='red')
+    ), row=1, col=1
+)
+fig.add_trace(go.Scatter(
+        x=puts['strikePrice'],
+        y=puts['markPrice'],
+        mode='lines',
+        name='Put Mark Price', 
+        line=dict(color='grey') # Grey for mark
+    ), row=1, col=1
 )
 
 # Add a vertical line at the exercisePrice (current price)
