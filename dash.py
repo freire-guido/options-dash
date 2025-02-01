@@ -18,7 +18,7 @@ st.title("Binance Options Dashboard")
 st.sidebar.header("Filter")
 
 st.sidebar.subheader("Symbol")
-asset = st.sidebar.selectbox('', sorted(options['asset'].unique()))
+asset = st.sidebar.selectbox('crypto', sorted(options['asset'].unique()))
 
 st.sidebar.subheader("Expiration")
 days_from_today = st.sidebar.slider(
