@@ -7,6 +7,8 @@ def fetch_binance_options(symbol = None):
     response.raise_for_status()
     if response.status_code == 200:
         data = pd.DataFrame(response.json())
+        data['asset'] = data['symbol'].str.split('-').str[0]
+
         data['bidPrice'] = data['bidPrice'].astype(float)
         data['askPrice'] = data['askPrice'].astype(float)
         data['strikePrice'] = data['strikePrice'].astype(float)
@@ -20,6 +22,6 @@ def fetch_mark_price(symbol = None):
     response = requests.get(url, params= {"symbol": symbol})
     response.raise_for_status()
     if response.status_code == 200:
-        data = pd.DataFrame(response.json())
+        data = pd.DataFrame(response.json())     
         data['markPrice'] = data['markPrice'].astype(float)
         return data

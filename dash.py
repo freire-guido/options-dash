@@ -7,7 +7,7 @@ from plotly.subplots import make_subplots
 from datetime import datetime
 from options import fetch_binance_options, fetch_mark_price
 
-symbol = 'BTC'
+asset = 'BTC'
 
 st.sidebar.header("Filter by Expiration Date")
 days_from_today = st.sidebar.slider(
@@ -21,7 +21,7 @@ days_from_today = st.sidebar.slider(
 options = fetch_binance_options()
 marks = fetch_mark_price()
 
-options = options[options['symbol'].str.contains(symbol)]
+options = options[options['asset'] == asset]
 data = options.join(marks.set_index('symbol'), on='symbol')
 
 data['expirationDate'] = data['symbol'].str.extract(r'-(\d{6})-')[0]
